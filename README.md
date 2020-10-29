@@ -1,4 +1,4 @@
-#SoCs are cool, lets build some.
+## SoCs are cool, lets build some.
 
 Just trying FPGA, soft-core CPU, SoC stuff..
 
