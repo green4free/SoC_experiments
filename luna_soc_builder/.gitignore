@@ -1,0 +1,7 @@
+__pycache__
+*.o
+*.bin
+*.elf
+.in
+resources.h
+soc.ld
