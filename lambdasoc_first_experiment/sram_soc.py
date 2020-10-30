@@ -17,8 +17,6 @@ from USB_serial import USBSerialPeripheral
 from ledController import RGB_LED
 from pseudoRandomPeriph import PseudoRandomPeripheral
 
-#from generate_headers import HeaderGenerator
-
 __all__ = ["SRAMSoC"]
 
 
@@ -129,11 +127,6 @@ if __name__ == "__main__":
          led_addr  =0x00005200,
          rand_addr =0x00005300,
     )
-
-    #hGen = HeaderGenerator(soc._decoder)
-    #hGen.addPeripheral(soc.uart)
-    #hGen.addPeripheral(soc.timer)
-    #hGen.addPeripheral(soc.intc)
 
     #soc.build(do_build=True, do_init=True)
     platform.build(soc, do_program=True)
