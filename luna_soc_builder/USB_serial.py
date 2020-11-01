@@ -11,7 +11,7 @@ __all__ = ["USBSerialPeripheral"]
 #This was designed to replace the AsyncSerialPeripheral from lambdasoc
 
 class USBSerialPeripheral(Peripheral, Elaboratable):
-    def __init__(self, *, usb_interface = None, rx_depth=16, tx_depth=16, **kwargs):
+    def __init__(self, *, usb_interface = None, rx_depth=64, tx_depth=64, **kwargs):
         super().__init__()
         
         if usb_interface is None:

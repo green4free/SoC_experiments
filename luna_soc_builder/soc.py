@@ -22,13 +22,15 @@ from USB_serial import USBSerialPeripheral
 from ledController import RGB_LED
 from pseudoRandomPeriph import PseudoRandomPeripheral
 
+from peripherals import MutexPeripheral
+
 class Top(Elaboratable):
 
     def __init__(self):
         self.soc = soc = SimpleSoC(clock_frequency=int(48e6))
 
-        soc.add_rom("main.bin", size=0x1000)
-        soc.add_ram(0x1000)
+        soc.add_rom("main.bin", size=0x4000)
+        soc.add_ram(0x2000)
         
         self.USB_serial = USB_serial = USBSerialPeripheral()
         soc.add_peripheral(USB_serial)
@@ -41,6 +43,10 @@ class Top(Elaboratable):
 
         self.prandom = prandom = PseudoRandomPeripheral()
         soc.add_peripheral(prandom)
+
+        self.mutex = mutex = MutexPeripheral(nr_of_clients=3)
+        for mutex_interface in mutex.interfaces:
+            soc.add_peripheral(mutex_interface, as_submodule=False)
     
     def elaborate(self, platform):
         m = Module()
@@ -48,6 +54,7 @@ class Top(Elaboratable):
         m.submodules.car = platform.clock_domain_generator()
         self.USB_serial.set_usb_interface(platform.request(platform.default_usb_connection))
         self.status_led.led_resource = platform.request('rgb_led', 0)
+        m.submodules.mutex = self.mutex
         m.submodules.soc = self.soc
 
         return m
